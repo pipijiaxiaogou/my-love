@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>请扫描条形码</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body class="page page-scan">
+    <div class="card scan-card">
+        <div class="emoji">📷</div>
+        <h2>请扫描条形码</h2>
+        <p class="subtitle">向右滑动扫描线完成扫描</p>
+
+        <div class="barcode-box">
+            <div class="barcode"></div>
+
+            <!-- 滑动条 -->
+            <div class="scan-track" id="track">
+                <div class="scan-thumb" id="thumb"></div>
+            </div>
+        </div>
+
+        <p class="hint">提示：按住绿色圆点向右滑动，就像扫条形码一样</p>
+    </div>
+
+    <script>
+        const track = document.getElementById('track');
+        const thumb = document.getElementById('thumb');
+
+        let dragging = false;
+        let startX = 0;
+        let startLeft = 0;
+
+        function px(v) { return Number(String(v).replace('px', '')); }
+        function getMaxLeft() {
+            return track.clientWidth - thumb.clientWidth;
+        }
+
+        function handleStart(clientX) {
+            dragging = true;
+            startX = clientX;
+            startLeft = px(getComputedStyle(thumb).left);
+        }
+
+        function handleMove(clientX) {
+            if (!dragging) return;
+            let dx = clientX - startX;
+            let newLeft = Math.min(Math.max(0, startLeft + dx), getMaxLeft());
+            thumb.style.left = newLeft + 'px';
+
+            // 滑到 90% 以后，算完成，跳到卡片页
+            if (newLeft >= getMaxLeft() * 0.9) {
+                dragging = false;
+                setTimeout(() => { location.href = 'cards.html'; }, 300);
+            }
+        }
+
+        function handleEnd() {
+            if (!dragging) return;
+            // 没滑到终点就松手，回到最左边
+            if (px(thumb.style.left || 0) < getMaxLeft() * 0.9) {
+                thumb.style.left = '0px';
+            }
+            dragging = false;
+        }
+
+        // PC 鼠标
+        thumb.addEventListener('mousedown', e => {
+            e.preventDefault();
+            handleStart(e.clientX);
+        });
+        window.addEventListener('mousemove', e => handleMove(e.clientX));
+        window.addEventListener('mouseup', handleEnd);
+
+        // 手机触摸
+        thumb.addEventListener('touchstart', e => {
+            const t = e.touches[0];
+            handleStart(t.clientX);
+        });
+        window.addEventListener('touchmove', e => {
+            const t = e.touches[0];
+            handleMove(t.clientX);
+        }, { passive: false });
+        window.addEventListener('touchend', handleEnd);
+    </script>
+</body>
+
+</html>

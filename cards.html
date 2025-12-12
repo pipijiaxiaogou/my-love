@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>给 魏思瑶 的话</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body class="page page-cards">
+
+    <div class="cards-wrapper">
+        <!-- 每一块就是一张卡片，自由改内容 & 名字 -->
+        <!-- data-index 按顺序 1,2,3... 往下写就行，可以多写很多条 -->
+        <div class="msg-card" data-index="1">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">你真的...好美</div>
+        </div>
+
+        <div class="msg-card" data-index="2">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">我们会永远在一起</div>
+        </div>
+
+        <div class="msg-card" data-index="3">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">我不想再做你哥哥了</div>
+        </div>
+
+        <div class="msg-card" data-index="4">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">不许再伤害自己</div>
+        </div>
+
+        <div class="msg-card" data-index="5">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">按时吃饭 好好睡觉</div>
+        </div>
+
+        <div class="msg-card" data-index="6">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">公主殿下 为自己活一次</div>
+        </div>
+
+        <div class="msg-card" data-index="7">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">你有好好的写故事吗</div>
+        </div>
+
+        <div class="msg-card" data-index="8">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">我会好好守护你</div>
+        </div>
+
+        <div class="msg-card" data-index="9">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">偶尔也要做回小朋友</div>
+        </div>
+
+        <div class="msg-card" data-index="10">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">所有眼泪 都有人帮你擦</div>
+        </div>
+
+        <div class="msg-card" data-index="11">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">你值得被温柔以待</div>
+        </div>
+
+        <div class="msg-card" data-index="12">
+            <div class="msg-title">魏思瑶</div>
+            <div class="msg-text">我们终会同期而归</div>
+        </div>
+    </div>
+
+    <script>
+        // 让卡片一个接一个弹出来 + 左右错位 + 轻微旋转 + 呼吸发光
+        window.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.msg-card');
+
+            cards.forEach(card => {
+                const i = Number(card.dataset.index || 1);
+
+                // 出现的先后顺序：每张相差 0.35 秒
+                const delay = i * 0.35;
+
+                // 垂直微调，让它不是规整的一条竖线
+                const offsetY = (i % 4) * 4 + 2; // 2~14px 的小偏移
+
+                // 左右错位：1,4,7... 更向左；2,5,8... 更居中；3,6,9... 向右
+                let offsetX;
+                if (i % 3 === 1) {
+                    offsetX = -22;   // 靠左
+                } else if (i % 3 === 2) {
+                    offsetX = 6;     // 稍微靠中
+                } else {
+                    offsetX = 26;    // 靠右
+                }
+
+                // 轻微旋转，增加小纸条的感觉
+                const rotate = (i % 2 === 0) ? -2 : 2; // 偶数向左转一点，奇数向右
+
+                // 设置动画延迟和偏移量
+                card.style.animationDelay = delay + 's';
+                card.style.setProperty('--offset-x', offsetX + 'px');
+                card.style.setProperty('--offset-y', offsetY + 'px');
+                card.style.setProperty('--rotate-deg', rotate + 'deg');
+
+                // 在对应时间点让卡片“真正出现”并加上 shown 类，触发呼吸发光动画
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.classList.add('shown');
+                }, delay * 1000); // delay 是秒，这里要乘 1000 变成毫秒
+            });
+        });
+    </script>
+</body>
+
+</html>

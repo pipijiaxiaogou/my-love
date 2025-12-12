@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 12px;
+}
+
+.card {
+    width: 100%;
+    max-width: 460px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .08);
+    padding: 32px 24px 28px;
+    text-align: center;
+}
+
+/* Hi 页 */
+.page-hi .emoji {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.page-hi h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #666;
+}
+
+.primary-btn {
+    margin-top: 24px;
+    width: 100%;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 0;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, #50d5ff, #6a82fb);
+    box-shadow: 0 8px 20px rgba(98, 141, 255, .45);
+}
+
+/* 扫码页 */
+.page-scan .scan-card {
+    padding-top: 26px;
+}
+
+.page-scan .emoji {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.page-scan h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.barcode-box {
+    margin-top: 26px;
+}
+
+.barcode {
+    width: 100%;
+    height: 150px;
+    background-image: repeating-linear-gradient(to right,
+            #000 0, #000 4px,
+            #fff 4px, #fff 7px);
+    border-radius: 10px;
+    border: 2px solid #e4f2ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-track {
+    margin: 16px auto 0;
+    width: 90%;
+    height: 28px;
+    border-radius: 999px;
+    background: #e6f7ff;
+    position: relative;
+}
+
+.scan-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: #20c997;
+    border: 3px solid #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .25);
+}
+
+.hint {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #8792a5;
+}
+
+/* =========================
+   第三页：卡片页 + 照片背景
+   ========================= */
+
+.page-cards {
+    align-items: flex-start;
+    padding-top: 70px;
+    padding-bottom: 60px;
+
+    /* 兜底背景色（万一图片加载不出来） */
+    background: #fbe9ff;
+}
+
+/* 照片背景层（40% 不透明，内容在上面） */
+.page-cards::before {
+    content: "";
+    position: fixed;
+    /* 固定在屏幕上，滚动时也不会动 */
+    inset: 0;
+    z-index: -1;
+    /* 放到所有内容后面 */
+
+    background-image: url("img/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.4;
+    /* 透明度 40%（你可以改 0.4~0.6 看效果） */
+}
+
+.cards-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 70vh;
+}
+
+/* 单张卡片：多彩 + 半透明 + 灵动边缘 */
+.msg-card {
+    position: relative;
+    width: 78%;
+    max-width: 380px;
+    padding: 14px 18px 16px;
+    border-radius: 18px;
+    margin: 0 auto 14px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .16);
+    opacity: 0;
+
+    /* 动画参考点 */
+    transform-origin: center center;
+
+    /* 初始弹出动画 */
+    animation: popIn 0.55s cubic-bezier(.18, .89, .32, 1.28) forwards;
+
+    /* 位置 & 旋转由 JS 里设置的 CSS 变量控制 */
+    transform:
+        translateX(var(--offset-x, 0px)) translateY(var(--offset-y, 0px)) rotate(var(--rotate-deg, 0deg)) scale(.94);
+}
+
+/* 多种颜色 + 半透明（颜色可以按你喜好改） */
+.msg-card:nth-child(5n+1) {
+    background-color: rgba(255, 171, 184, 0.7);
+    /* 粉 */
+}
+
+.msg-card:nth-child(5n+2) {
+    background-color: rgba(173, 216, 230, 0.7);
+    /* 蓝 */
+}
+
+.msg-card:nth-child(5n+3) {
+    background-color: rgba(229, 188, 255, 0.7);
+    /* 紫 */
+}
+
+.msg-card:nth-child(5n+4) {
+    background-color: rgba(115, 243, 115, 0.479);
+    /* 绿 */
+}
+
+.msg-card:nth-child(5n) {
+    background-color: rgba(251, 255, 27, 0.618);
+    /* 黄 */
+}
+
+/* 标题 + 正文 */
+.msg-title {
+    font-size: 13px;
+    color: rgba(0, 0, 0, .55);
+    margin-bottom: 4px;
+    letter-spacing: .03em;
+}
+
+.msg-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.5;
+}
+
+/* 卡片边缘发光：外圈柔和光晕 */
+.msg-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    /* 比卡片稍微大一点 */
+    border-radius: inherit;
+    background: radial-gradient(circle at top left,
+            rgba(255, 255, 255, 0.8),
+            transparent 55%);
+    opacity: 0.0;
+    /* 默认很淡，后面配合 hover */
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+/* 内圈柔光 + 白色描边，让边更柔和 */
+.msg-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.35),
+        0 0 20px rgba(255, 192, 203, 0.25);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+/* 呼吸发光动画：轻微亮度 & 大小起伏 */
+@keyframes cardGlowBreath {
+    0% {
+        box-shadow:
+            0 14px 34px rgba(0, 0, 0, .16);
+        transform:
+            translateX(var(--offset-x, 0px)) translateY(var(--offset-y, 0px)) rotate(var(--rotate-deg, 0deg)) scale(.94);
+    }
+
+    50% {
+        box-shadow:
+            0 18px 40px rgba(0, 0, 0, .22);
+        transform:
+            translateX(var(--offset-x, 0px)) translateY(var(--offset-y, 0px)) rotate(var(--rotate-deg, 0deg)) scale(.96);
+    }
+
+    100% {
+        box-shadow:
+            0 14px 34px rgba(0, 0, 0, .16);
+        transform:
+            translateX(var(--offset-x, 0px)) translateY(var(--offset-y, 0px)) rotate(var(--rotate-deg, 0deg)) scale(.94);
+    }
+}
+
+/* 已经“出现”的卡片：在 popIn 后叠加呼吸动画 */
+.msg-card.shown {
+    animation:
+        popIn 0.55s cubic-bezier(.18, .89, .32, 1.28) forwards,
+        cardGlowBreath 4.5s ease-in-out 0.8s infinite;
+}
+
+/* 鼠标悬停时（电脑看时）让外圈光稍微亮一点 */
+.msg-card:hover::before {
+    opacity: 0.6;
+}
+
+/* 卡片弹出动画：从下 + 缩小状态弹上来 */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform:
+            translateX(var(--offset-x, 0px)) translateY(calc(var(--offset-y, 0px) + 40px)) rotate(var(--rotate-deg, 0deg)) scale(.76);
+    }
+
+    70% {
+        opacity: 1;
+        transform:
+            translateX(calc(var(--offset-x, 0px) - 2px)) translateY(calc(var(--offset-y, 0px) - 4px)) rotate(calc(var(--rotate-deg, 0deg) * 1.1)) scale(1.03);
+    }
+
+    100% {
+        opacity: 1;
+        transform:
+            translateX(var(--offset-x, 0px)) translateY(var(--offset-y, 0px)) rotate(var(--rotate-deg, 0deg)) scale(1);
+    }
+}
+
+/* 小屏幕适配 */
+@media (max-width: 420px) {
+    .msg-card {
+        width: 86%;
+        border-radius: 16px;
+        padding: 12px 14px 14px;
+    }
+
+    .msg-text {
+        font-size: 16px;
+    }
+}
